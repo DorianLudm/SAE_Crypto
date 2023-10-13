@@ -66,8 +66,8 @@ def dechiffrement_cesar_with_key(entree: list[str], cle: int):
                     cpt_mot += 1
                     nb_mot_in_set += mot_in_set(mot_courant)
                     mot_courant = ""
-                    if cpt_mot >= 5:
-                        est_lisible = nb_mot_in_set >= 3
+                    if cpt_mot >= 10:
+                        est_lisible = nb_mot_in_set >= 8
                 else:
                     mot_courant += lettre
         if mot_courant != "":
@@ -80,6 +80,5 @@ import time
 start = time.time()
 
 main("indice1_chiffre.txt", "dictionnaire_fr.txt")
-
 end = time.time()
 print(end - start)
