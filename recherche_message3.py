@@ -33,7 +33,27 @@ def calc_decalage(message_crypte, message):
         if lettre_crypte not in dic_trans.keys():
             dic_trans[lettre_crypte] = (int_trans, lettre)
         else:
-            print(dic_trans[lettre_crypte] == (int_trans, lettre))
+           if dic_trans[lettre_crypte] != (int_trans, lettre):
+               return False
+    tri_par_valeur(dic_trans)
     return dic_trans
 
+def tri_par_valeur(dico):
+    for k, v in sorted(dico.items(), key=lambda x: x[1]):
+        print("%s: %s" % (k, v))
+    
 print(calc_decalage(mc, m))
+
+pangramme = "LE VIF ZEPHYR JUBILE SUR LES KUMQUATS DU CLOWN GRACIEUX"
+
+def premiere_apparition(texte):
+    res = ""
+    in_res = []
+    for lettre in texte:
+        if lettre != " " and lettre != ",":
+            if lettre not in in_res:
+                res += lettre
+                in_res.append(lettre)
+    return res
+
+print(premiere_apparition(pangramme))
