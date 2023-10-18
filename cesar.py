@@ -1,8 +1,9 @@
-texte_crypte = []
+import autre_fonctions as fonc
+
 ensemble_mot = set()
 
 def main(fichier_mot, fichier_dico):
-    fic_to_text(fichier_mot)
+    texte_crypte = fonc.fic_to_text(fichier_mot)
     # print(texte_crypte) #Affiche le texte crypté
     load_dictionnaire(fichier_dico)
     print(dechiffrement_cesar(texte_crypte))
@@ -14,17 +15,6 @@ def load_dictionnaire(fichier):
     for mot in les_lignes:
         ensemble_mot.add(mot.replace("\n", ""))
     fic.close()
-
-def fic_to_text(fichier):
-    global texte_crypte
-    res = []
-    fic = open(fichier, 'r')
-    les_lignes = fic.readlines()
-    for ligne in les_lignes:
-        res.append(ligne.replace("\n", ""))
-        texte_crypte.append(ligne.replace("\n", ""))
-    fic.close()
-    return res
 
 def mot_in_set(mot: str):
     global ensemble_mot
@@ -80,5 +70,6 @@ import time
 start = time.time()
 
 main("indice1_chiffre.txt", "dictionnaire_fr.txt")
+
 end = time.time()
 print(end - start)

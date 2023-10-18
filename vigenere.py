@@ -1,3 +1,5 @@
+
+
 def decalage(lettre:str):
     ascii = ord(lettre)
     if 65 <= ascii <= 90:
