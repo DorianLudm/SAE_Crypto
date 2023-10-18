@@ -1,4 +1,8 @@
+import autre_fonctions as fonc
 
+def main(fic_msg: str, cle: str):
+    msg = fonc.fic_to_text(fic_msg)
+    return decode_vigenere(msg, cle)
 
 def decalage(lettre:str):
     ascii = ord(lettre)
