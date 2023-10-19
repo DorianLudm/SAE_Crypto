@@ -9,8 +9,6 @@ def fic_to_text(fichier):
     fic.close()
     return res
 
-pangramme = "LE VIF ZEPHYR JUBILE SUR LES KUMQUATS DU CLOWN GRACIEUX"
-
 def premiere_apparition(texte):
     res = ""
     in_res = []
@@ -20,5 +18,3 @@ def premiere_apparition(texte):
                 res += lettre
                 in_res.append(lettre)
     return res
-
-print(premiere_apparition(pangramme))

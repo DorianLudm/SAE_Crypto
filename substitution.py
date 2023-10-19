@@ -1,3 +1,5 @@
+import autre_fonctions as fonc
+
 def get_dic_transformation(clé):
     res = dict()
     indice_cle = 0
@@ -26,10 +28,11 @@ def substitution(message_c, cle):
             res += lettre
     return res
 
+# Exécutable
 import time
 start = time.time()
 
-print(substitution("EALOK, OKCT LOFX PLPSF! UF VKIF L ZKCASYA FTD: FUYXFEFDH", "LEVIFZPHYRJUBSKMQATDCOWNGX"))
+print(substitution(fonc.fic_to_text("indice3_chiffre.txt")[0], fonc.premiere_apparition("LE VIF ZEPHYR JUBILE SUR LES KUMQUATS DU CLOWN GRACIEUX")))
 
 end = time.time()
 print(end - start)
