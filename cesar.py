@@ -66,6 +66,7 @@ def dechiffrement_cesar_with_key(entree: list[str], cle: int):
         liste_res.append(res_ligne)
     return liste_res
 
+# Exécutable
 import time
 start = time.time()
 

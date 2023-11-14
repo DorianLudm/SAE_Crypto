@@ -41,18 +41,12 @@ def decode_vigenere(msg: list[str], cle: str):
                 res_ligne += lettre
         res.append(res_ligne)
     return res
-    
-message_code = ["AE IOW ZQBLNR WASIXQ WJR YKJ KGYUJAGY UU OXSLN TXRCUQYM",
-"IY IRCTQ HPNF RR RQBIIIGOFN XQ WTCEKK DQ OIH MHXDUDQW BAYNVUDQYM",
-"NR MRRPQD SU CXVMUQV HOHLWLQ CYT LRY GRQYMTRRY RPBMVXTVUES",
-"QF EXNFO UEHAMAEM RV MQEWPGR IRCTQ HTREOVRQ XE HUOYKIFGXXOA"]
 
+# Exécutable
 import time
 start = time.time()
 
-cle = "PANGRAMME"
-msg_decode = decode_vigenere(message_code, cle)
-print(msg_decode)
+print(decode_vigenere(fonc.fic_to_text("indice2_chiffre.txt"), "PANGRAMME"))
 
 end = time.time()
 print(end - start)
