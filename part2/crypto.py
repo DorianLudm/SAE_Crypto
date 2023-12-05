@@ -10,21 +10,20 @@ def cassage_brutal(message_chiffre, taille_cle1,taille_cle2):
  
 def cassage_astucieux(message_clair, message_chiffre):
     """Cassage astucieux de la clé"""
-    dict_messageInTheMiddle = dict()
+    dict_encoded = dict()
+    dict_decoded = dict()
     for cle in range(1,2**8):
         #Passage de M à C1
         msg_crypted = encrypt(cle, message_clair)
-        if msg_crypted in dict_messageInTheMiddle.keys():
-            if encrypt(dict_messageInTheMiddle[msg_crypted], message_clair) == decrypt(dict_messageInTheMiddle[msg_crypted], message_chiffre):
-                return (cle, dict_messageInTheMiddle[msg_crypted], msg_crypted)
-        dict_messageInTheMiddle[msg_crypted] = cle
+        if msg_crypted in dict_decoded.keys():
+            return (cle, dict_decoded[msg_crypted], msg_crypted)
+        dict_encoded[msg_crypted] = cle
 
         #Passage de C2 à C1
         msg_decrypted = decrypt(cle, message_chiffre)
-        if msg_decrypted in dict_messageInTheMiddle.keys():
-            if encrypt(dict_messageInTheMiddle[msg_decrypted], message_clair) == decrypt(dict_messageInTheMiddle[msg_decrypted], message_chiffre):
-                return (dict_messageInTheMiddle[msg_decrypted], cle, msg_decrypted)
-        dict_messageInTheMiddle[msg_decrypted] = cle
+        if msg_decrypted in dict_encoded.keys():
+            return (dict_encoded[msg_decrypted], cle, msg_decrypted)
+        dict_decoded[msg_decrypted] = cle
         
     return None
 
