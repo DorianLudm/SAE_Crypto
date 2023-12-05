@@ -14,3 +14,11 @@ authentiques». Arsène Lupin, l'homme aux mille déguisements: tour à
 tour chauffeur, ténor, bookmaker, fils de famille, adolescent,
 vieillard, commis-voyageur marseillais, médecin russe, torero
 espagnol!
+
+str_binaire = ""
+str_binaire += ord(for char in txt)
+str_binaire += ob(ord(for char in txt))
+
+"ar" -> binaire
+str_binaire "0000000100000110"
+ou str_binaire "11001"
