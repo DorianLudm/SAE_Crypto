@@ -12,34 +12,32 @@ def cassage_astucieux(message_clair, message_chiffre):
     """Cassage astucieux de la clé"""
     dict_encoded = dict()
     dict_decoded = dict()
+    set_res = set()
     for cle in range(1,2**8):
         #Passage de M à C1
         msg_crypted = encrypt(cle, message_clair)
         if msg_crypted in dict_decoded.keys():
-            return (cle, dict_decoded[msg_crypted], msg_crypted)
+            set_res.add((cle, dict_decoded[msg_crypted]))
         dict_encoded[msg_crypted] = cle
 
         #Passage de C2 à C1
         msg_decrypted = decrypt(cle, message_chiffre)
         if msg_decrypted in dict_encoded.keys():
-            return (dict_encoded[msg_decrypted], cle, msg_decrypted)
+            set_res.add((dict_encoded[msg_decrypted], cle))
         dict_decoded[msg_decrypted] = cle
         
-    return None
+    return set_res
 
-# cassage_brutal(0b00010001,5,5)
-# print("Les clés sont : ",cassage_brutal(0b00010001,5,5))    
-
-msg = 0b00010001
-cle = 0b00001101
-msg_crypted1 = encrypt(cle, msg)
-cle2 = 0b00001111
-msg_crypted2 = encrypt(cle2, msg_crypted1)
-print(cle, cle2)
-print(msg, msg_crypted1, msg_crypted2)
-# print(decrypt(cle2, msg_crypted2))
-# print(msg_crypted1)
-# print()
-# print(decrypt(8, msg_crypted2))
-# print(encrypt(12, msg))
-print("Les clés sont : ",cassage_astucieux(msg, msg_crypted2))
+import random
+passed = 0
+nb_test = 2048
+for i in range(nb_test):
+    msg = random.randint(0, 255)
+    cle = random.randint(0, 255)
+    msg_crypted = encrypt(cle, msg)
+    cle2 = random.randint(0, 255)
+    msg_crypted2 = encrypt(cle2, msg_crypted)
+    keys = cassage_astucieux(msg, msg_crypted2)
+    if (cle, cle2) in keys:
+        passed += 1
+print("Taux de réussite:", passed/nb_test*100, "%")
