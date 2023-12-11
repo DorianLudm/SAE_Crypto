@@ -22,4 +22,16 @@ Décodage astucieux par "Meet in the middle":
 L'attaquant utilise un programme de déchiffrement qui se propagent des deux extrémités jusqu'au milieu du système, dans certains cas en devinant une partie de la clé. Si les événements ne correspondent pas au milieu, l'hypothèse de la clé est erronée et peut être jetée.
 Ce principe provient de la théorie des graphes lorsqu'on essaye de relier deux sommets entre eux. Au lieu de faire un parcours simple depuis la racine, on fais un double parcours des deux cotés afin de transformer l'algorithme d'une compléxité de O(n<sup>n</sup>) à une compléxité de O(2n)
 
-### Notre décodage astucieux
+### Notre décodage SDES  
+Pour ce qui est des fonctions de décodage SDES, nous en avons trois.
+Ces trois fonctions reprennent notamment les principes évoqués précédemment afin de rendre le décryptage de plus en plus efficace, en terme de réussite comme en temps.
+Nos trois fonctions sont alors:  
+- cassage_brtual: Renvoie un set des résultats possible. Lent mais réussite assurée.
+- cassage_astucieux: Renvoie un set des couples de clés possible. Rapide mais environ 50% de chance de réussite.
+- cassage_astucieux2: Renvoie aussi un set des couples de clés possibles. Environ 50% plus lent que cassage_astucieux, mais 100% de réussite.
+Nos deux cassage_astucieux tente de reprendre le principe du "Meet in the Middle".  
+![Screenshot des sorties lors de l'éxécution des tests](./img/SDES.png)  
+
+Il est aussi important de noter la taille des sets renvoyés par nos fonctions. Malgrès le fait que celui peut paraitre conséquent, on dénombre en moyenne 256 couples de clés possible pour un encryptement par double SDES de taille de clé 8 (Soit 256 possibilités par clé). Sur les 65536 couples de clé1, clé2. On retourne alors 1/256<sup>ème</sup> des possibilités totale.  
+![Screenshot de la sortie terminal quand à la taille des sets résultats](./img/nb_couples.png)  
+Si jamais on souhaite trouver quelle clé est utilisé pour décoder un texte, on peut alors écrire une fonction qui test l'ensemble des 256 couples trouvé par cassage_astucieux pour ensuite appliqués les clés sur le texte et vérifier petit à petit que les mots formés appartiennent au dictionnaire français (anglais, etc).

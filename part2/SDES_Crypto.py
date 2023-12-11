@@ -87,7 +87,7 @@ def test_astucieux():
     import random
     start_time = time.time()
     passed = 0
-    nb_test = 2048
+    nb_test = 65536
     nb_iter = 0
     for i in range(nb_test):
         msg = random.randint(0, 255)
@@ -107,7 +107,7 @@ def test_astucieux2():
     import random
     start_time = time.time()
     passed = 0
-    nb_test = 2048
+    nb_test = 65536
     nb_iter = 0
     for i in range(nb_test):
         msg = random.randint(0, 255)
@@ -140,7 +140,7 @@ def encodage_texte(fichier):
                     ligneCrypted = ligneCrypted + char
             text.append(ligneCrypted)
         fic.close()
-        fic2 = open("./part2/Encoded_text", 'w')
+        fic2 = open("./part2/encoded_text", 'w')
         for ligne in text:
             fic2.write(ligne)
         fic2.close()
