@@ -112,6 +112,33 @@ def test_astucieux2():
     time = time.time() - start_time
     print("Décodage astucieux 2! Taux de réussite:", passed/nb_test*100, "% sur", nb_test, "tests en", time, "secondes")
 
+def encodage_texte(fichier):
+    try:
+        import random
+        fic = open(fichier, 'r')
+        text = []
+        cle1 = random.randint(0, 255)
+        cle2 = random.randint(0, 255)
+        for ligne in fic.readlines():
+            ligneCrypted = ""
+            for char in ligne:
+                ascii = ord(char)
+                if 65 <= ascii <= 90 or 97 <= ascii <= 122:
+                    crypted = encrypt(cle2, encrypt(cle1, ascii))
+                    ligneCrypted = ligneCrypted + chr(crypted)
+                else:
+                    ligneCrypted = ligneCrypted + char
+            text.append(ligneCrypted)
+        fic.close()
+        fic2 = open("./part2/Encoded_text", 'w')
+        for ligne in text:
+            fic2.write(ligne)
+        fic2.close()
+        print("Texte crypté!")
+    except:
+        print("Erreur lors de l'ouverture du fichier!")
+
+encodage_texte("./part2/arsene_lupin_extrait.txt")
 test_brutal()
 test_astucieux()
 test_astucieux2()
