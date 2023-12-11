@@ -1,12 +1,13 @@
 from SDES import *
 
-def cassage_brutal(message_chiffre, taille_cle1,taille_cle2):
+def cassage_brutal(message_clair, message_chiffre):
     """Cassage brutal de la clé"""
-    for i in range(2**taille_cle1):
-        for j in range(2**taille_cle2):
-            if decrypt(i,decrypt(j,message_chiffre)) == 0b00000000:
-                return (i,j)
-    return (0,0)
+    set_res = set()
+    for i in range(2**8):
+        for j in range(2**8):
+            if encrypt(i,message_clair) == decrypt(j,message_chiffre):
+                set_res.add((i,j))
+    return set_res
  
 def cassage_astucieux(message_clair, message_chiffre):
     """Cassage astucieux de la clé"""
@@ -57,6 +58,24 @@ def cassage_astucieux2(message_clair, message_chiffre):
 
     return test_cle
 
+def test_brutal():
+    import time
+    import random
+    start_time = time.time()
+    passed = 0
+    nb_test = 16
+    for i in range(nb_test):
+        msg = random.randint(0, 255)
+        cle = random.randint(0, 255)
+        msg_crypted = encrypt(cle, msg)
+        cle2 = random.randint(0, 255)
+        msg_crypted2 = encrypt(cle2, msg_crypted)
+        keys = cassage_brutal(msg, msg_crypted2)
+        if (cle, cle2) in keys:
+            passed += 1
+    time = time.time() - start_time
+    print("Décodage Brutal 1! Taux de réussite:", passed/nb_test*100, "% sur", nb_test, "tests en", time, "secondes")
+    
 def test_astucieux():
     import time
     import random
@@ -93,5 +112,6 @@ def test_astucieux2():
     time = time.time() - start_time
     print("Décodage astucieux 2! Taux de réussite:", passed/nb_test*100, "% sur", nb_test, "tests en", time, "secondes")
 
+test_brutal()
 test_astucieux()
 test_astucieux2()
