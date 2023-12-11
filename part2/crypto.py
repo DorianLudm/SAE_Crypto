@@ -13,7 +13,7 @@ def cassage_astucieux(message_clair, message_chiffre):
     dict_encoded = dict()
     dict_decoded = dict()
     set_res = set()
-    for cle in range(1,2**8):
+    for cle in range(2**8):
         #Passage de M à C1
         msg_crypted = encrypt(cle, message_clair)
         if msg_crypted in dict_decoded.keys():
@@ -30,33 +30,10 @@ def cassage_astucieux(message_clair, message_chiffre):
 
 def cassage_astucieux2(message_clair, message_chiffre):
     """Cassage astucieux de la clé"""
-    # dict_res[C1][clé1] = set(clé2)
-    dict_encoded = dict() # Dictionnaire ayant pour key M1, et pour valeurs un dictionnaire ayant pour key C1 et pour valeurs un set de C2
-    dict_decoded = dict()
-    for cle in range(1,2**8):
-        #Passage de M à C1
-        msg_crypted = encrypt(cle, message_clair)
-        if msg_crypted in dict_encoded.keys():
-            dict_encoded[msg_crypted].add(cle)
-        else:
-            dict_encoded[msg_crypted] = set()
-            dict_encoded[msg_crypted].add(cle)
-
-        #Passage de C2 à C1
-        msg_decrypted = decrypt(cle, message_chiffre)
-        if msg_decrypted in dict_decoded.keys():
-            dict_decoded[msg_decrypted].add(cle)
-        else:
-            dict_decoded[msg_decrypted] = set()
-            dict_decoded[msg_decrypted].add(cle)
-    return None
-
-def cassage_astucieux2(message_clair, message_chiffre):
-    """Cassage astucieux de la clé"""
     dict_encoded = dict()
     dict_decoded = dict()
     test_cle = set()
-    for cle in range(0,2**8):
+    for cle in range(2**8):
         #Passage de M à C1
         msg_crypted = encrypt(cle, message_clair)
         if msg_crypted in dict_decoded.keys():
