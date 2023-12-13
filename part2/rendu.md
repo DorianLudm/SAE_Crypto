@@ -1,18 +1,18 @@
-# SAE 3.04, Cryptographie partie 2.
-## Par LUDMANN Dorian et HAUDEBOURG Baptiste  
+# SAE 3.04, Cryptographie partie 2.  
+## Par LUDMANN Dorian et HAUDEBOURG Baptiste  
 
-### Partie 1  
-## En supposant que RSA soit utilisé correctement, Eve peut-elle espérer en venir à bout? En vous appuyant sur votre cours, justifiez votre réponse.  
+## Partie 1  
+### En supposant que RSA soit utilisé correctement, Eve peut-elle espérer en venir à bout? En vous appuyant sur votre cours, justifiez votre réponse.  
 Si le RSA est utilisé correctement, Eve peut espérer en venir à bout à l'aide de la méthode brute force.  
 Peu importe sa compléxité, il est possible de le décrypter. Cependant, plus sa compléxité est élevée, plus le temps de décryptage par brute force est important.  
 
 
-## En quoi l’algorithme SDES est-il peu sécurisé? Vous justifierez votre réponse en analysant le nombre d’essai nécessaire à une méthode “force brute” pour retrouver la clé.  
+### En quoi l’algorithme SDES est-il peu sécurisé? Vous justifierez votre réponse en analysant le nombre d’essai nécessaire à une méthode “force brute” pour retrouver la clé.  
 Selon l'implémentation du [SDES en python](https://jhafranco.com/2012/02/10/simplified-des-implementation-in-python/), "il suffit, en moyenne, de seulement 512 essais afin de le décrypter", par le fait qu'il y ai seulement 2<sup>8</sup> possibilités unique sachant que la clé est codée sur 10 bits.  
 L'algorithme SDES est donc très peu sécurisé par le fait que la force brute permet de "déchiffrer la clé en l'espace de quelques dixièmes de secondes".  
 
 
-## Est-ce que double SDES est-il vraiment plus sur? Quelle(s) information(s) supplémentaire(s) Eve doit-elle récupérer afin de pouvoir espérer venir à bout du double DES plus rapidement qu’avec un algorithme brutal? Décrivez cette méthode astucieuse et précisez le nombre d’essai pour trouver la clé.  
+### Est-ce que double SDES est-il vraiment plus sur? Quelle(s) information(s) supplémentaire(s) Eve doit-elle récupérer afin de pouvoir espérer venir à bout du double DES plus rapidement qu’avec un algorithme brutal? Décrivez cette méthode astucieuse et précisez le nombre d’essai pour trouver la clé.  
 Le double SDES est certes plus sécurisé qu'un chiffrage par SDES mais dans quelles mesures?  
 - Contre un brut force, l'anciennement 2<sup>8</sup> possibilités se transforme désormais en 2<sup>8<sup>2</sup></sup> = 2<sup>64</sup> possibilités. Il faut donc en moyenne 9,2*10<sup>18</sup> essais en moyenne.
 - Pourtant, sur un cassage astucieux, doubler le SDES est peu efficace, car contre sa variante brutale, où 2<sup>n</sup> est le nombre de possibilités d'encondage (avec n le nombre de cryptage par SDES), sur un cassage astucieux, le nombre d'itérations nécéssaire afin de décrypter le code est de 2n. Les 1024 possibilités deviennent 1024*2 = 2048, qui reste alors à moins d'une seconde d'éxécution pour décoder. En moyenne, il faudras alors 1024 essais pour décoder le message.
@@ -34,4 +34,21 @@ Nos deux cassage_astucieux tente de reprendre le principe du "Meet in the Middle
 
 Il est aussi important de noter la taille des sets renvoyés par nos fonctions. Malgrès le fait que celui peut paraitre conséquent, on dénombre en moyenne 256 couples de clés possible pour un encryptement par double SDES de taille de clé 8 (Soit 256 possibilités par clé). Sur les 65536 couples de clé1, clé2. On retourne alors 1/256<sup>ème</sup> des possibilités totale.  
 ![Screenshot de la sortie terminal quand à la taille des sets résultats](./img/nb_couples.png)  
-Si jamais on souhaite trouver quelle clé est utilisé pour décoder un texte, on peut alors écrire une fonction qui test l'ensemble des 256 couples trouvé par cassage_astucieux pour ensuite appliqués les clés sur le texte et vérifier petit à petit que les mots formés appartiennent au dictionnaire français (anglais, etc).
+Si jamais on souhaite trouver quelle clé est utilisé pour décoder un texte, on peut alors écrire une fonction qui test l'ensemble des 256 couples trouvé par cassage_astucieux pour ensuite appliqués les clés sur le texte et vérifier petit à petit que les mots formés appartiennent au dictionnaire français (anglais, etc).  
+
+## Partie 4
+### Alice et Bob utilisent toujours la même clé. Est-ce une bonne pratique?  
+Non! Si jamais la clé venait a ce faire déchiffrer, alors leurs messages seraient toujours décryptable et mettrais alors en danger leurs vie privés.  
+Une méthode courante et de changer la clé à chaque message, afin de ne pas corrompre la sécurité des échanges même après décryptage d'un message.  
+
+### Le protocole PlutotBonneConfidentialité est inspiré d’un vrai protocole réseau. Lequel? Décrivez la partie associé à la certification des clés qui est absente de PlutotBonneConfidentialité.  
+
+### Il n’y a pas que pour l’échange de mots doux q’un tel protocole peut se révéler utile... Donnez au moins deux autres exemples de contexte où cela peut se révéler utile.  
+
+### Connaissez-vous des applications de messagerie utilisant des mécanismes de chiffrement similaires? Citez-en au moins deux et décrivez brièvement les mécanismes cryptographiques sous-jacent.  
+Le chiffrement E2EE (end to end encryption) est un type d'enchiffrement qui permet de rendre le message accessible seulement aux utilisateurs participants. Personne d'autre ne peut y avoir accès, même l'host du service de communication, ne peut retrouver les messages d'origine.  
+Snapchat est l'exemple le plus connu, mais on retrouve aussi les géants de l'informatique comme google et son application "Google Messenger".  
+Son fonctionnement est simple, au lieu de décrypter le message en cours de route, c'est seulement au moment de son arrivée que celui-ci le sera. Ce qui change, c'est que le serveur transit ne peut donc connaitre le contenu du message.  
+Exemple | Bob souhaite envoyer un message à Alice en passant par le serveur transit S_t. Bob crypte alors son message avec la clé publique d'Alice. Le message passe alors par S_t et Alice recoit un message illisible. Une fois reçu, elle peut alors utiliser sa clé privée pour pouvoir décoder le message que Bob lui a envoyé.  
+
+### Récemment, différents projets de loi et règlements (CSAR, EARN IT Act) visent à inciter voir obliger les fournisseurs de services numériques à pouvoir déchiffrer (et donc analyser) les communications de leur.e.s utilisateur.rices. Discutez des arguments en faveur ou contre ces législations, notamment en matière de vie privée.  
