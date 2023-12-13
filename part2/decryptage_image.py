@@ -1,27 +1,22 @@
 from PIL import Image
 
-def img():
-    i = Image.open("./part2/img/rossignol1.bmp")
-    i2 = Image.open("./part2/img/rossignol2.bmp")
+def comparaison_img(img1, img2):
+    # On retourne ici la clé sur 64 bits, mais la clé est print sur 128 bits dans le terminal afin de montrer que celle-ci est bien coder sur les 64 premiers bits
+    i = Image.open(img1)
+    i2 = Image.open(img2)
     string_clé = ""
     cpt = 0
     counter_boucle = 0
     for y in range(i.size[1]): #Colonne
         for x in range(i.size[0]): #Ligne
             counter_boucle += 1
-            c_i = i.getpixel((x,y))
             c_i2 = i2.getpixel((x,y))
-            if c_i == c_i2+1 or c_i == c_i2:
-                string_clé += "0"
-            else:
-                cpt += 1
-                string_clé += "1"
-                print(counter_boucle, c_i, c_i2)
-            if counter_boucle > 64:
+            string_clé += str(c_i2%2)
+            if counter_boucle >= 128:
                 break
-        if counter_boucle > 64:
+        if counter_boucle >= 128:
             break
-    print(cpt)
-    print(string_clé)
+    print(cpt, string_clé)
+    return string_clé[0:64]
 
-img()
+key = comparaison_img("./part2/img/rossignol1.bmp", "./part2/img/rossignol2.bmp")
