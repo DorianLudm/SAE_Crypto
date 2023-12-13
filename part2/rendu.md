@@ -26,9 +26,13 @@ Ce principe provient de la théorie des graphes lorsqu'on essaye de relier deux 
 Pour ce qui est des fonctions de décodage SDES, nous en avons trois.
 Ces trois fonctions reprennent notamment les principes évoqués précédemment afin de rendre le décryptage de plus en plus efficace, en terme de réussite comme en temps.
 Nos trois fonctions sont alors:  
-- cassage_brtual: Renvoie un set des résultats possible. Lent mais réussite assurée.
-- cassage_astucieux: Renvoie un set des couples de clés possible. Rapide mais environ 50% de chance de réussite.
-- cassage_astucieux2: Renvoie aussi un set des couples de clés possibles. Environ 50% plus lent que cassage_astucieux, mais 100% de réussite.
+- cassage_brtual: Renvoie un set des résultats possible. Lent mais réussite assurée.  
+-> 1.5sec/test
+- cassage_astucieux: Renvoie un set des couples de clés possible. Rapide mais environ 50% de chance de réussite.  
+-> 0.005sec/test
+- cassage_astucieux2: Renvoie aussi un set des couples de clés possibles. Environ 2x plus lent que cassage_astucieux, mais 100% de réussite.  
+-> 0.01sec/test  
+
 Nos deux cassage_astucieux tente de reprendre le principe du "Meet in the Middle".  
 ![Screenshot des sorties lors de l'éxécution des tests](./img/SDES.png)  
 
