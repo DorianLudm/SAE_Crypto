@@ -140,7 +140,7 @@ def encodage_texte(fichier):
                     ligneCrypted = ligneCrypted + char
             text.append(ligneCrypted)
         fic.close()
-        fic2 = open("./part2/encoded_text", 'w')
+        fic2 = open("./part2/encoded_text.txt", 'w')
         for ligne in text:
             fic2.write(ligne)
         fic2.close()
@@ -148,7 +148,7 @@ def encodage_texte(fichier):
     except:
         print("Erreur lors de l'ouverture du fichier!")
 
-#encodage_texte("./part2/arsene_lupin_extrait.txt")
-test_brutal()
-test_astucieux()
-test_astucieux2()
+encodage_texte("./part2/arsene_lupin_extrait.txt")
+# test_brutal()
+# test_astucieux()
+# test_astucieux2()
