@@ -40,6 +40,37 @@ Il est aussi important de noter la taille des sets renvoyés par nos fonctions. 
 ![Screenshot de la sortie terminal quand à la taille des sets résultats](./img/nb_couples.png)  
 Si jamais on souhaite trouver quelle clé est utilisé pour décoder un texte, on peut alors écrire une fonction qui test l'ensemble des 256 couples trouvé par cassage_astucieux pour ensuite appliqués les clés sur le texte et vérifier petit à petit que les mots formés appartiennent au dictionnaire français (anglais, etc).  
 
+## Partie 2
+## Cryptographie et AES  
+
+### Sténographie
+Notre mission est de trouver une clé à l'aide des deux images données.  
+La première hypothèse que nous avons pu émêttre est celle que les bits des pixels additionnés à la clé formait une équation de forme suivante: Image1 + Clé = Image2, soit Image2 - Image1 = Clé.  
+Exemple: Si l'image un possède 4 pixels de valeurs (128, 172, 64, 152) et que les pixels de l'image2 possède 4 pixels de valeurs (129, 172, 64, 153), alors la clé serait égale à 1001.  
+Or, cette première hypothèse ne c'est pas révélé correcte car nous avons pu nous apercevoir que si un bit de position x était égal à 1 dans l'image 1, et à 0 dans l'image 2, la clé devait être égale à 0.
+La seconde hypothèse qui alors été formulée, et que la clé a trouver est lisible sur la concaténation des bits de poid faible de l'image 2.
+![Sortie terminale des bits](./img/decrypt_img.jpg)  
+Suite à la sortie de la clé calculé, on a pu observer que des 1 apparaissent jusqu'au bit 61. Notre hypothèse parait nous parait alors validée suite à cette trouvaille. On en déduira aussi que la clé est codée sur 64 bits (8 octets).
+Une fonction python a aussi été implémenté afin d'automatiser cette recherche.
+```py
+def comparaison_img(img_to_decrypt):
+    # On retourne ici la clé sur 64 bits, mais la clé est print sur 128 bits dans le terminal afin de montrer que celle-ci est bien coder sur les 64 premiers bits
+    i = Image.open(img_to_decrypt)
+    string_clé = ""
+    counter_boucle = 0
+    for y in range(i.size[1]): #Colonne
+        for x in range(i.size[0]): #Ligne
+            counter_boucle += 1
+            shade_of_grey = i.getpixel((x,y))
+            string_clé += str(shade_of_grey%2)
+            if counter_boucle >= 64:
+                break
+        if counter_boucle >= 64:
+            break
+    print("Key found:", string_clé)
+    return string_clé[0:64]
+```
+
 ## Partie 4
 ### Alice et Bob utilisent toujours la même clé. Est-ce une bonne pratique?  
 Non! Si jamais la clé venait a ce faire déchiffrer, alors leurs messages seraient toujours décryptable et mettrais alors en danger leurs vie privés.  
