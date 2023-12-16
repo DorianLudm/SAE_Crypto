@@ -49,7 +49,7 @@ La première hypothèse que nous avons pu émêttre est celle que les bits des p
 Exemple: Si l'image un possède 4 pixels de valeurs (128, 172, 64, 152) et que les pixels de l'image2 possède 4 pixels de valeurs (129, 172, 64, 153), alors la clé serait égale à 1001.  
 Or, cette première hypothèse ne c'est pas révélé correcte car nous avons pu nous apercevoir que si un bit de position x était égal à 1 dans l'image 1, et à 0 dans l'image 2, la clé devait être égale à 0.
 La seconde hypothèse qui alors été formulée, et que la clé a trouver est lisible sur la concaténation des bits de poid faible de l'image 2.
-# INSERT IMAGE HERE
+![Sortie terminale des bits](./img/decrypt_img.jpg)  
 Suite à la sortie de la clé calculé, on a pu observer que des 1 apparaissent jusqu'au bit 61. Notre hypothèse parait nous parait alors validée suite à cette trouvaille. On en déduira aussi que la clé est codée sur 64 bits (8 octets).
 Une fonction python a aussi été implémenté afin d'automatiser cette recherche.
 ```py
