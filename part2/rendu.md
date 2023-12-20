@@ -1,6 +1,16 @@
 # SAE 3.04, Cryptographie partie 2.  
 ## Par LUDMANN Dorian et HAUDEBOURG Baptiste  
 
+Faire page de garde ici
+
+Saut de page
+
+## Répartition des taches
+| Tâche    | Sujet 1            | Partie 1                              | Partie 2     | Partie 3              | Partie 4 |
+|----------|--------------------|---------------------------------------|--------------|-----------------------|----------|
+| Dorian   | Ensemble du projet | Début de l'implémentation et markdown | Partie Image |                       | Q1 et Q4 |
+| Baptiste |                    | Implémentation avancée du SDES        | Partie AES   | Ensemble de la partie |          |
+
 ## Partie 1  
 ### En supposant que RSA soit utilisé correctement, Eve peut-elle espérer en venir à bout? En vous appuyant sur votre cours, justifiez votre réponse.  
 Si le RSA est utilisé correctement, Eve peut espérer en venir à bout à l'aide de la méthode brute force.  
