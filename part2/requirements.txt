@@ -1,0 +1,3 @@
+pip install Pycryptodome
+pip install Pillow
+pip install scapy

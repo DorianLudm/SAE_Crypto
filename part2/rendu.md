@@ -26,7 +26,7 @@ Le double SDES est certes plus sécurisé qu'un chiffrage par SDES mais dans que
 
 Décodage astucieux par "Meet in the middle":
 L'attaquant utilise un programme de déchiffrement qui se propagent des deux extrémités jusqu'au milieu du système, dans certains cas en devinant une partie de la clé. Si les événements ne correspondent pas au milieu, l'hypothèse de la clé est erronée et peut être jetée.
-Ce principe provient de la théorie des graphes lorsqu'on essaye de relier deux sommets entre eux. Au lieu de faire un parcours simple depuis la racine, on fais un double parcours des deux cotés afin de transformer l'algorithme d'une compléxité de O(n<sup>n</sup>) à une compléxité de O(2n)
+Ce principe provient de la théorie des graphes lorsqu'on essaye de relier deux sommets entre eux. Au lieu de faire un parcours simple depuis la racine, on fais un double parcours des deux cotés afin de transformer l'algorithme d'une compléxité de O(n<sup>2</sup>) à une compléxité de O(2n)
 
 ### Notre décodage SDES  
 Pour ce qui est des fonctions de décodage SDES, nous en avons trois.

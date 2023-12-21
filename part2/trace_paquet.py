@@ -1,6 +1,5 @@
 from scapy.all import *
 from Crypto.Cipher import AES
-from Crypto.Random import get_random_bytes
 
 #ouverure du fichier cap
 packets = rdpcap('./part2/trace_sae.cap')
