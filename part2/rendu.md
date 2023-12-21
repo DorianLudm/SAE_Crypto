@@ -73,7 +73,7 @@ Notre mission est de trouver une clé à l'aide des deux images données.
 La première hypothèse que nous avons pu émêttre est celle que les bits des pixels additionnés à la clé formait une équation de forme suivante: Image1 + Clé = Image2, soit Image2 - Image1 = Clé.  
 Exemple: Si l'image un possède 4 pixels de valeurs (128, 172, 64, 152) et que les pixels de l'image2 possède 4 pixels de valeurs (129, 172, 64, 153), alors la clé serait égale à 1001.  
 Or, cette première hypothèse ne c'est pas révélé correcte car nous avons pu nous apercevoir que si un bit de position x était égal à 1 dans l'image 1, et à 0 dans l'image 2, la clé devait être égale à 0.
-La seconde hypothèse qui alors été formulée, et que la clé a trouver est lisible sur la concaténation des bits de poid faible de l'image 2.
+La seconde hypothèse qui alors été formulée, et que la clé a trouver est lisible sur la concaténation des bits de poid faible de l'image 2.  
 ![Sortie terminale des bits](./img/decrypt_img.jpg)  
 Suite à la sortie de la clé calculé, on a pu observer que des 1 apparaissent jusqu'au bit 61. Notre hypothèse parait nous parait alors validée suite à cette trouvaille. On en déduira aussi que la clé est codée sur 64 bits (8 octets).
 Une fonction python a aussi été implémenté afin d'automatiser cette recherche.
@@ -98,7 +98,10 @@ def comparaison_img(img_to_decrypt):
 
 ## Partie 3
 
-Tout d'abord, il faut récupérer la clé que l'on obtient avec l'image. Une fois cela fait, on va procéder à la récupération des informations présent dans la trace, une fois la trace récupérée, on va vérifier que le paquet correspond à un message UDP ainsi que le port correspondant au message soit bien 9999. Ensuite, il faut récupérer les 16 premiers bits qui correspondent au message crypté, ainsi le reste correspondra au vecteur d'initialisation qui est créer aléatoire au moment du cryptage du message, ainsi avec la clé, le message et le vecteur d'initialisation on peut enfin décrypter le message et obtenir le résultat. Enfin, on peut remarquer que selon le système d'exploitation le résultat n'est pas le même, en effet sur Windows on trouvera un résultat composé d'emoji tandis que lorsque nous avons réalisé le travail sur xubuntu sur les machines de l'iut ils n'apparaissaient pas.
+Tout d'abord, il faut récupérer la clé que l'on obtient par sténographie lors de la partie 2, que l'on dupliquera afin de la mettre sur 256 bits.  
+Une fois cela fait, on va procéder à la récupération des informations présent dans la trace, une fois la trace récupérée, on va vérifier que le paquet correspond à un message UDP ainsi que le port correspondant au message soit bien 9999.  
+Il faut ensuite récupérer les 16 premiers bits qui correspondent au message crypté, ainsi le reste correspondra au vecteur d'initialisation qui est créé aléatoirement au moment du cryptage du message.  
+On peut alors, avec la clé, le message et le vecteur d'initialisation déchiffrer le message et obtenir le résultat. On peut remarquer que selon le système d'exploitation le résultat n'est pas le même, en effet sur Windows on trouvera un résultat composé d'emoji tandis que lorsque nous avons réalisé le travail sur xubuntu sur les machines de l'Iut ils n'apparaissaient pas. On suppose que l'encodage utf-8 est différent selon le système d'exploitation.  
 
 ## Partie 4
 ### Alice et Bob utilisent toujours la même clé. Est-ce une bonne pratique?  
