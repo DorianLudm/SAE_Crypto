@@ -4,7 +4,7 @@ from Crypto.Random import get_random_bytes
 
 #ouverure du fichier cap
 packets = rdpcap('./part2/trace_sae.cap')
-#clef de 256 bits récupéré à partir de l'image et dupliqué pour avoir 256 bits
+#clef de 64 bits récupéré à partir de l'image et dupliqué pour avoir 256 bits
 key = b"1110011101101101001100010011111110010010101110011001000001001100111001110110110100110001001111111001001010111001100100000100110011100111011011010011000100111111100100101011100110010000010011001110011101101101001100010011111110010010101110011001000001001100"
 #conversion de la clef en bytes
 key = int(key, 2).to_bytes(32, byteorder='big')

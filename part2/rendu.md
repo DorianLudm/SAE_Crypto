@@ -8,8 +8,8 @@ Saut de page
 ## Répartition des taches
 | Tâche    | Sujet 1            | Partie 1                              | Partie 2     | Partie 3              | Partie 4 |
 |----------|--------------------|---------------------------------------|--------------|-----------------------|----------|
-| Dorian   | Ensemble du projet | Début de l'implémentation et markdown | Partie Image |                       | Q1 et Q4 |
-| Baptiste |                    | Implémentation avancée du SDES        | Partie AES   | Ensemble de la partie |          |
+| Dorian   | Ensemble du projet | Début de l'implémentation et markdown | Partie Image |                       | Q1, Q4 et Q5 |
+| Baptiste |                    | Implémentation avancée du SDES        | Partie AES   | Ensemble de la partie | Q2 et Q3 |
 
 ## Partie 1  
 ### En supposant que RSA soit utilisé correctement, Eve peut-elle espérer en venir à bout? En vous appuyant sur votre cours, justifiez votre réponse.  
@@ -50,13 +50,13 @@ Il est aussi important de noter la taille des sets renvoyés par nos fonctions. 
 ![Screenshot de la sortie terminal quand à la taille des sets résultats](./img/nb_couples.png)  
 Si jamais on souhaite trouver quelle clé est utilisé pour décoder un texte, on peut alors écrire une fonction qui test l'ensemble des 256 couples trouvé par cassage_astucieux pour ensuite appliqués les clés sur le texte et vérifier petit à petit que les mots formés appartiennent au dictionnaire français (anglais, etc).  
 
-## Partie 2
-## Cryptographie et AES  
+## Partie 2  
+### Cryptographie et AES  
 
-## 1. Est-ce vraiment un problème ? Justifiez votre réponse.  
+### 1. Est-ce vraiment un problème ? Justifiez votre réponse.  
 Cela risque de devenir un problème, en effet la clé est désormais de taille 256 bits pour AES comparé à 64 pour le SDES. Cette nouvelle taille va rendre le décryptage par force un brut beaucoup plus long. Le temps de ce décryptage restera très long.
 
-## 2. Nous allons tenter d'illustrer expérimentalement les différences entre les deux protocoles
+### 2. Nous allons tenter d'illustrer expérimentalement les différences entre les deux protocoles
 Nous pouvons retrouver le temps de cryptage et de décryptage de chacun des algorithmes. On peut remarquer que le temps reste assez similaire et très faible, ainsi l'utilisation de AES au lieu de SDES permet d'obtenir une meilleure protection pour des coûts très faible.
 ![Screenshot de la sortie terminal le temps du chiffrement SDES](./img/SDES_temps_crypt_decrypt.png)  
 Le temps d'exécution pour le chiffrement et déchiffrement d'un message pour le double SDES est de xxx, tandis que pour AES le temps est de xxxx pour l'exemple.  
@@ -65,7 +65,7 @@ Le temps de cassage que nous avons pu obtenir par force brut pour le double SDES
 Cependant, avec AES ici nous obtenons 1 * 10 <sup>27</sup> de temps théorique, pour faire ceci nous avons réalisé des tests par force brut afin de trouver toutes les clés sur x nombre, nous avons ensuite récupérer ce temps afin de le faire correspondre à toutes possibilités enfin nous l'avons changé en année.
 
 
-## 3. Il existe d'autre types d'attaques que de tester les différentes possibilités de clés. Lesquelles ? Vous donnerez une explication succincte de l'une d'elles.
+### 3. Il existe d'autre types d'attaques que de tester les différentes possibilités de clés. Lesquelles ? Vous donnerez une explication succincte de l'une d'elles.
 Les autre moyens de décrypter la clé sont une solution en lien avec une amélioration de l'attaque par rencontre au milieu, une attaques par canal auxiliaire. Cette dernière dispose de beaucoup de sous possibilités d'attaque, cependant elle consiste à rechercher des failles dans le matériel, l'implémentation ou encore dans le logiciel. 
 
 ### Sténographie
@@ -116,3 +116,10 @@ Son fonctionnement est simple, au lieu de décrypter le message en cours de rout
 Exemple | Bob souhaite envoyer un message à Alice en passant par le serveur transit S_t. Bob crypte alors son message avec la clé publique d'Alice. Le message passe alors par S_t et Alice recoit un message illisible. Une fois reçu, elle peut alors utiliser sa clé privée pour pouvoir décoder le message que Bob lui a envoyé.  
 
 ### Récemment, différents projets de loi et règlements (CSAR, EARN IT Act) visent à inciter voir obliger les fournisseurs de services numériques à pouvoir déchiffrer (et donc analyser) les communications de leur.e.s utilisateur.rices. Discutez des arguments en faveur ou contre ces législations, notamment en matière de vie privée.  
+Ces projets de lois ont pour but de lutter contre les infractions en ligne, notamment pour aider à la lutte du terrorisme.  
+Le but de ses projets de lois est de pouvoir déchiffrer les messages afin de comprendre les circonstances d'évènements passé, ainsi que d'aider à éviter des attaques futures.  
+Malgrés le fait que ces projets mettent en jeu la vie privée des utilisateurs, celui-ci se doit de consentir qu'il n'as rien à se reprocher avant de pouvoir utiliser la plateforme. De plus, l'extraction des messages décryptés se doit d'être fait dans un cadre légal.  
+Pourtant, cela ne change pas le fait qu'un hacker, ou qu'une personne ayant accès aux ressources de la base de donnée, puisse se permettre de déchiffrer l'ensemble des conversations.  
+C'est à cause de cette éventualité que ces projets de loi ne sont encore que projets, et que la population porte débat sur le rendement entre sécurité et liberté.  
+
+### Par Ludmann Dorian et Haudebourg Baptiste 2A1
