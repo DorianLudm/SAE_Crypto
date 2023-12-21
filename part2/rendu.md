@@ -1,10 +1,6 @@
 # SAE 3.04, Cryptographie partie 2.  
 ## Par LUDMANN Dorian et HAUDEBOURG Baptiste  
 
-Faire page de garde ici
-
-Saut de page
-
 ## Répartition des taches
 | Tâche    | Sujet 1            | Partie 1                              | Partie 2     | Partie 3              | Partie 4 |
 |----------|--------------------|---------------------------------------|--------------|-----------------------|----------|
