@@ -109,8 +109,10 @@ Non! Si jamais la clé venait a ce faire déchiffrer, alors leurs messages serai
 Une méthode courante et de changer la clé à chaque message, afin de ne pas corrompre la sécurité des échanges même après décryptage d'un message.  
 
 ### Le protocole PlutotBonneConfidentialité est inspiré d’un vrai protocole réseau. Lequel? Décrivez la partie associé à la certification des clés qui est absente de PlutotBonneConfidentialité.  
+Le protocole PlutotBonneConfidentialité est inspiré du protocole SSL. Il s'agit d'un protocole permettant la sécurisation des communications, il doit utiliser une certification des clés afin de pouvoir s'assurer que la communication est sécurisé. Cette certification nécessite plusieurs étapes, notamment la création d'une clé asymétrique contenant une clé publique et privée, une demande de certification qui doit être validé par une autorité de certification. Enfin, on pourra utiliser ce certificat pour communiquer.
 
 ### Il n’y a pas que pour l’échange de mots doux q’un tel protocole peut se révéler utile... Donnez au moins deux autres exemples de contexte où cela peut se révéler utile.  
+En effet, on peut utiliser ce protocole sur les sites internet, il reste important que les transmissions de données restent sécurisées, ainsi l'utilisation de ce protocole peut correspondre au besoin des sites internet. De plus, il peut être utilisé pour la transmission de message comme vu précédemment mais aussi sur des mails, si l'on trouve le besoin de réaliser un mail sécurisé par exemple.  
 
 ### Connaissez-vous des applications de messagerie utilisant des mécanismes de chiffrement similaires? Citez-en au moins deux et décrivez brièvement les mécanismes cryptographiques sous-jacent.  
 Le chiffrement E2EE (end to end encryption) est un type d'enchiffrement qui permet de rendre le message accessible seulement aux utilisateurs participants. Personne d'autre ne peut y avoir accès, même l'host du service de communication, ne peut retrouver les messages d'origine.  
