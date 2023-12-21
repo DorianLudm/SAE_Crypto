@@ -53,6 +53,21 @@ Si jamais on souhaite trouver quelle clé est utilisé pour décoder un texte, o
 ## Partie 2
 ## Cryptographie et AES  
 
+## 1. Est-ce vraiment un problème ? Justifiez votre réponse.  
+Cela risque de devenir un problème, en effet la clé est désormais de taille 256 bits pour AES comparé à 64 pour le SDES. Cette nouvelle taille va rendre le décryptage par force un brut beaucoup plus long. Le temps de ce décryptage restera très long.
+
+## 2. Nous allons tenter d'illustrer expérimentalement les différences entre les deux protocoles
+Nous pouvons retrouver le temps de cryptage et de décryptage de chacun des algorithmes. On peut remarquer que le temps reste assez similaire et très faible, ainsi l'utilisation de AES au lieu de SDES permet d'obtenir une meilleure protection pour des coûts très faible.
+![Screenshot de la sortie terminal le temps du chiffrement SDES](./img/SDES_temps_crypt_decrypt.png)  
+Le temps d'exécution pour le chiffrement et déchiffrement d'un message pour le double SDES est de xxx, tandis que pour AES le temps est de xxxx pour l'exemple.  
+Le temps de cassage que nous avons pu obtenir par force brut pour le double SDES est d'environ 3 secondes afin d'obtenir toutes les clés possibles.  
+![Screenshot de la sortie terminal le temps du chiffrement AES](./img/AES_temps_crypt_decrypt.png)  
+Cependant, avec AES ici nous obtenons 1 * 10 <sup>27</sup> de temps théorique, pour faire ceci nous avons réalisé des tests par force brut afin de trouver toutes les clés sur x nombre, nous avons ensuite récupérer ce temps afin de le faire correspondre à toutes possibilités enfin nous l'avons changé en année.
+
+
+## 3. Il existe d'autre types d'attaques que de tester les différentes possibilités de clés. Lesquelles ? Vous donnerez une explication succincte de l'une d'elles.
+Les autre moyens de décrypter la clé sont une solution en lien avec une amélioration de l'attaque par rencontre au milieu, une attaques par canal auxiliaire. Cette dernière dispose de beaucoup de sous possibilités d'attaque, cependant elle consiste à rechercher des failles dans le matériel, l'implémentation ou encore dans le logiciel. 
+
 ### Sténographie
 Notre mission est de trouver une clé à l'aide des deux images données.  
 La première hypothèse que nous avons pu émêttre est celle que les bits des pixels additionnés à la clé formait une équation de forme suivante: Image1 + Clé = Image2, soit Image2 - Image1 = Clé.  
@@ -80,6 +95,10 @@ def comparaison_img(img_to_decrypt):
     print("Key found:", string_clé)
     return string_clé[0:64]
 ```
+
+## Partie 3
+
+Tout d'abord, il faut récupérer la clé que l'on obtient avec l'image. Une fois cela fait, on va procéder à la récupération des informations présent dans la trace, une fois la trace récupérée, on va vérifier que le paquet correspond à un message UDP ainsi que le port correspondant au message soit bien 9999. Ensuite, il faut récupérer les 16 premiers bits qui correspondent au message crypté, ainsi le reste correspondra au vecteur d'initialisation qui est créer aléatoire au moment du cryptage du message, ainsi avec la clé, le message et le vecteur d'initialisation on peut enfin décrypter le message et obtenir le résultat. Enfin, on peut remarquer que selon le système d'exploitation le résultat n'est pas le même, en effet sur Windows on trouvera un résultat composé d'emoji tandis que lorsque nous avons réalisé le travail sur xubuntu sur les machines de l'iut ils n'apparaissaient pas.
 
 ## Partie 4
 ### Alice et Bob utilisent toujours la même clé. Est-ce une bonne pratique?  
