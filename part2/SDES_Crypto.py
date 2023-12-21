@@ -1,20 +1,24 @@
 from SDES import *
 
-def cassage_brutal(message_clair, message_chiffre):
+def cassage_brutal(message_clair, message_chiffre, compteur = False):
     """Cassage brutal de la clé"""
+    cpt = 0
     set_res = set()
     for i in range(2**8):
         for j in range(2**8):
+            cpt += 1
             if encrypt(i,message_clair) == decrypt(j,message_chiffre):
                 set_res.add((i,j))
-    return set_res
+    return set_res, cpt if compteur else set_res
  
-def cassage_astucieux(message_clair, message_chiffre):
+def cassage_astucieux(message_clair, message_chiffre, compteur = False):
     """Cassage astucieux de la clé"""
     dict_encoded = dict()
     dict_decoded = dict()
     set_res = set()
+    cpt = 0
     for cle in range(2**8):
+        cpt += 1
         #Passage de M à C1
         msg_crypted = encrypt(cle, message_clair)
         if msg_crypted in dict_decoded.keys():
@@ -26,15 +30,16 @@ def cassage_astucieux(message_clair, message_chiffre):
         if msg_decrypted in dict_encoded.keys():
             set_res.add((dict_encoded[msg_decrypted], cle))
         dict_decoded[msg_decrypted] = cle
-        
-    return set_res
+    return set_res, cpt if compteur else set_res
 
-def cassage_astucieux2(message_clair, message_chiffre):
+def cassage_astucieux2(message_clair, message_chiffre, compteur = False):
     """Cassage astucieux de la clé"""
     dict_encoded = dict()
     dict_decoded = dict()
     test_cle = set()
+    cpt = 0
     for cle in range(2**8):
+        cpt += 1
         #Passage de M à C1
         msg_crypted = encrypt(cle, message_clair)
         if msg_crypted in dict_decoded.keys():
@@ -55,8 +60,7 @@ def cassage_astucieux2(message_clair, message_chiffre):
         if not msg_decrypted in dict_decoded:
             dict_decoded[msg_decrypted] = []
         dict_decoded[msg_decrypted].append(cle)
-
-    return test_cle
+    return test_cle, cpt if compteur else test_cle
 
 def test_brutal():
     import time
@@ -64,53 +68,59 @@ def test_brutal():
     start_time = time.time()
     passed = 0
     nb_test = 16
+    nb_iter = 0
     for i in range(nb_test):
         msg = random.randint(0, 255)
         cle = random.randint(0, 255)
         msg_crypted = encrypt(cle, msg)
         cle2 = random.randint(0, 255)
         msg_crypted2 = encrypt(cle2, msg_crypted)
-        keys = cassage_brutal(msg, msg_crypted2)
-        if (cle, cle2) in keys:
+        keys = cassage_brutal(msg, msg_crypted2, True)
+        if (cle, cle2) in keys[0]:
             passed += 1
+            nb_iter += keys[1]
     time = time.time() - start_time
-    print("Décodage Brutal 1! Taux de réussite:", passed/nb_test*100, "% sur", nb_test, "tests en", time, "secondes")
+    print("Décodage Brutal 1! Taux de réussite:", passed/nb_test*100, "% sur", nb_test, "tests en", time, "secondes. Nombre d'itérations moyen:", nb_iter/nb_test, "itérations")
     
 def test_astucieux():
     import time
     import random
     start_time = time.time()
     passed = 0
-    nb_test = 2048
+    nb_test = 65536
+    nb_iter = 0
     for i in range(nb_test):
         msg = random.randint(0, 255)
         cle = random.randint(0, 255)
         msg_crypted = encrypt(cle, msg)
         cle2 = random.randint(0, 255)
         msg_crypted2 = encrypt(cle2, msg_crypted)
-        keys = cassage_astucieux(msg, msg_crypted2)
-        if (cle, cle2) in keys:
+        keys = cassage_astucieux(msg, msg_crypted2, True)
+        if (cle, cle2) in keys[0]:
             passed += 1
+            nb_iter += keys[1]
     time = time.time() - start_time
-    print("Décodage astucieux 1! Taux de réussite:", passed/nb_test*100, "% sur", nb_test, "tests en", time, "secondes")
+    print("Décodage astucieux 1! Taux de réussite:", passed/nb_test*100, "% sur", nb_test, "tests en", time, "secondes. Nombre d'itérations moyen:", nb_iter/nb_test, "itérations")
 
 def test_astucieux2():
     import time
     import random
     start_time = time.time()
     passed = 0
-    nb_test = 2048
+    nb_test = 65536
+    nb_iter = 0
     for i in range(nb_test):
         msg = random.randint(0, 255)
         cle = random.randint(0, 255)
         msg_crypted = encrypt(cle, msg)
         cle2 = random.randint(0, 255)
         msg_crypted2 = encrypt(cle2, msg_crypted)
-        keys = cassage_astucieux2(msg, msg_crypted2)
-        if (cle, cle2, msg_crypted) in keys:
+        keys = cassage_astucieux2(msg, msg_crypted2, True)
+        if (cle, cle2, msg_crypted) in keys[0]:
             passed += 1
+            nb_iter += keys[1]
     time = time.time() - start_time
-    print("Décodage astucieux 2! Taux de réussite:", passed/nb_test*100, "% sur", nb_test, "tests en", time, "secondes")
+    print("Décodage astucieux 2! Taux de réussite:", passed/nb_test*100, "% sur", nb_test, "tests en", time, "secondes. Nombre d'itérations moyen:", nb_iter/nb_test, "itérations")
 
 def encodage_texte(fichier):
     try:
@@ -130,7 +140,7 @@ def encodage_texte(fichier):
                     ligneCrypted = ligneCrypted + char
             text.append(ligneCrypted)
         fic.close()
-        fic2 = open("./part2/Encoded_text", 'w')
+        fic2 = open("./part2/encoded_text.txt", 'w')
         for ligne in text:
             fic2.write(ligne)
         fic2.close()
@@ -139,6 +149,6 @@ def encodage_texte(fichier):
         print("Erreur lors de l'ouverture du fichier!")
 
 encodage_texte("./part2/arsene_lupin_extrait.txt")
-test_brutal()
-test_astucieux()
-test_astucieux2()
+# test_brutal()
+# test_astucieux()
+# test_astucieux2()
